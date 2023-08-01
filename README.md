@@ -1,25 +1,39 @@
-disk-xfer
----------
+# disk-xfer-rb
 
-A simple pair of programs to image copy an MS-DOS hard drive to an image file on a remote computer over serial port.
+A simple pair of programs to image copy a DEC Rainbow 100A/100B hard drive to
+an image file on a remote computer over serial port.
 
-I wrote this because I needed a quick tool to back up a Conner CP-30104H disk from a GRiDCASE 1537, and nothing else was working.
+This software is based on [disk-xfer](https://github.com/tschak909/disk-xfer), a disk imaging tool for IBM PC
+compatibles. Since the DEC Rainbow is quite incompatible with the IBM PC, this
+version replaces the disk and communications routines with something that
+works on the Rainbow. Otherwise the software should work identically.
 
-If you find it useful, that's awesome.
+## Usage
 
-to use:
+To use:
 
-Start tx on source machine:
+On the source machine, use SETPORT to change communications parameters to 19200,8,N,1 (no CTS or XON/XOFF).
+
+Start TXRB:
 
 ```
-C> tx
+A> TXRB
 ```
 
 Start rx on destination machine:
 
 ```
-$ rx diskimage.img
+$ rx /dev/ttyUSB0 diskimage.img
 ```
 
-If everything is connected correctly, tx will send the data over the COM1: serial port to the destination machine in the requested image file.
+If everything is connected correctly, tx will send the data over the AUX
+serial port to the destination machine in the requested image file.
 
+## Notes
+
+This has been tested on a real Rainbow 100A with a RD50 (ST-506) drive, as well as on
+the Rainbow 100B emulation on MAME.
+
+On my RD50 drive, the read seems to fail at cylinder 152, even though that cylinder
+should be there based on the geometry. I don't know this is normal, but the
+resulting image seems good anyway.
