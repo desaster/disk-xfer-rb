@@ -1,4 +1,4 @@
-SUBDIRS=rx-unix tx-msdos
+SUBDIRS=rx-unix tx-rainbow
 
 all: $(SUBDIRS)
 
